@@ -1,0 +1,20 @@
+{
+	"name": "DestinationDataset_qxp",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "covid19-synapse-dtywy3evjk25c-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "covidpolicyparquet",
+				"fileSystem": "workspace"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

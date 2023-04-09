@@ -1,0 +1,17 @@
+{
+	"name": "CountryLoadTemp",
+	"properties": {
+		"content": {
+			"query": "--CREATE SCHEMA [temp]\n--GO\n\nUse Temp\n\nCREATE EXTERNAL DATA SOURCE Covid19ModernDW\nWITH\n  ( \n    LOCATION = 'wasbs://covid19moderndw@covid19dtywy3evjk25c.blob.core.windows.net/' ,\n    CREDENTIAL = AzureCred ,\n    TYPE = HADOOP\n  ) \n\n\n\nCREATE EXTERNAL TABLE [temp].TempCountry (\n\nCountryName varchar(500), \nCountryCode varchar(3),\nlognitude float,\nlatitude float,\nSource varchar(100) \n   \n)\nWITH\n(\n    LOCATION='covid19moderndw/dboCountryCovid19DB'\n,   DATA_SOURCE = Covid19ModernDW\n,   FILE_FORMAT = TextFileFormat\n)\n; ",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "Temp",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
