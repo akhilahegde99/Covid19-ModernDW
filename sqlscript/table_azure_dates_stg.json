@@ -1,0 +1,17 @@
+{
+	"name": "table_azure_dates_stg",
+	"properties": {
+		"content": {
+			"query": "IF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseDelimitedTextFormat') \n\tCREATE EXTERNAL FILE FORMAT [SynapseDelimitedTextFormat] \n\tWITH ( FORMAT_TYPE = DELIMITEDTEXT ,\n\t       FORMAT_OPTIONS (\n\t\t\t FIELD_TERMINATOR = ',',\n\t\t\t USE_TYPE_DEFAULT = FALSE\n\t\t\t))\nGO\n\nIF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = 'covid19moderndw_covid19dtywy3evjk25c_dfs_core_windows_net') \n\tCREATE EXTERNAL DATA SOURCE [covid19moderndw_covid19dtywy3evjk25c_dfs_core_windows_net] \n\tWITH (\n\t\tLOCATION = 'abfss://covid19moderndw@covid19dtywy3evjk25c.dfs.core.windows.net', \n\t\tTYPE = HADOOP \n\t)\nGO\n\ndrop external table stg.azure_dates_stg\nCREATE EXTERNAL TABLE stg.azure_dates_stg (\n\t[DateKey] bigint,\n\t[FullDate] varchar(2000),\n\t[isWeekDay] bit,\n\t[DayOfWeek] bigint,\n\t[DayOfMonth] bigint,\n\t[DayOfQuarter] bigint,\n\t[DayOfYear] bigint,\n\t[DayName] nvarchar(4000),\n\t[WeekOfYear] bigint,\n\t[WeekName] nvarchar(4000),\n\t[MonthOfYear] bigint,\n\t[MonthName] nvarchar(4000),\n\t[CalendarQuarter] bigint,\n\t[CalendarQuarterName] nvarchar(4000),\n\t[CalendarYear] bigint,\n\t[FiscalMonth] bigint,\n\t[FiscalMonthName] nvarchar(4000),\n\t[FiscalQuarter] bigint,\n\t[FiscalQuarterName] nvarchar(4000),\n\t[FiscalYear] bigint\n\t)\n\tWITH (\n\tLOCATION = 'dboDatesCovid19DB.txt',\n\tDATA_SOURCE = [covid19moderndw_covid19dtywy3evjk25c_dfs_core_windows_net],\n\tFILE_FORMAT = [SynapseDelimitedTextFormat]\n\t)\nGO\n\n\nSELECT TOP 100 * FROM stg.azure_dates_stg\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "covid19dwsqlpool",
+				"poolName": "covid19dwsqlpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
