@@ -1,0 +1,17 @@
+{
+	"name": "table_onprem_covidmetrics_stg",
+	"properties": {
+		"content": {
+			"query": "IF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseDelimitedTextFormat') \n\tCREATE EXTERNAL FILE FORMAT [SynapseDelimitedTextFormat] \n\tWITH ( FORMAT_TYPE = DELIMITEDTEXT ,\n\t       FORMAT_OPTIONS (\n\t\t\t FIELD_TERMINATOR = ',',\n\t\t\t USE_TYPE_DEFAULT = FALSE\n\t\t\t))\nGO\n\nIF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = 'covid19moderndw_covid19dtywy3evjk25c_dfs_core_windows_net') \n\tCREATE EXTERNAL DATA SOURCE [covid19moderndw_covid19dtywy3evjk25c_dfs_core_windows_net] \n\tWITH (\n\t\tLOCATION = 'abfss://covid19moderndw@covid19dtywy3evjk25c.dfs.core.windows.net', \n\t\tTYPE = HADOOP \n\t)\nGO\n\nCREATE EXTERNAL TABLE dbo.onprem_CovidMetrics_Stg (\n    [ID] bigint,\n\t[Updated] varchar(2000),\n\t[Confirmed] bigint,\n\t[Confirmed_Change] bigint,\n\t[Deaths] bigint,\n\t[Deaths_Change] bigint,\n\t[Recovered] bigint,\n\t[Recovered_Change] bigint,\n\t[Latitude] float,\n\t[Longitude] float,\n\t[ISO2] nvarchar(4000),\n\t[ISO3] nvarchar(4000),\n\t[Country_Region] nvarchar(4000),\n\t[load_time] varchar(2000)\n\t)\n\tWITH (\n\tLOCATION = 'dboCovid19_Metricsonprem.txt',\n\tDATA_SOURCE = [covid19moderndw_covid19dtywy3evjk25c_dfs_core_windows_net],\n\tFILE_FORMAT = [SynapseDelimitedTextFormat]\n\t)\nGO\n\n\nSELECT TOP 100 * FROM dbo.onprem_CovidMetrics_Stg\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "covid19dwsqlpool",
+				"poolName": "covid19dwsqlpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
