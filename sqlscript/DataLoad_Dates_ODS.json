@@ -1,0 +1,17 @@
+{
+	"name": "DataLoad_Dates_ODS",
+	"properties": {
+		"content": {
+			"query": "Create procedure stg.DatesLoad \nAS\nInsert into [ods].[dates] ( \n\t[DateKey] \n\t,[FullDate] \n\t,[isWeekDay] \n\t,[DayOfWeek] \n\t,[DayOfMonth] \n\t,[DayOfQuarter] \n\t,[DayOfYear] \n\t,[DayName] \n\t,[WeekOfYear]\n\t,[WeekName] \n\t,[MonthOfYear] \n\t,[MonthName] \n\t,[CalendarQuarter] \n\t,[CalendarQuarterName] \n\t,[CalendarYear] \n\t,[FiscalMonth]\n\t,[FiscalMonthName] \n\t,[FiscalQuarter] \n\t,[FiscalQuarterName] \n\t,[FiscalYear] \n)\nSelect \t[DateKey] \n\t,[FullDate] \n\t,[isWeekDay] \n\t,[DayOfWeek] \n\t,[DayOfMonth] \n\t,[DayOfQuarter] \n\t,[DayOfYear] \n\t,REPLACE([DayName],'\"','') AS [DayName] \n\t,[WeekOfYear]\n\t,REPLACE([WeekName],'\"','') AS [WeekName]\n\t,[MonthOfYear] \n\t,REPLACE([MonthName] ,'\"','') AS [MonthName]\n\t,[CalendarQuarter] \n\t,REPLACE([CalendarQuarterName], '\"', '') AS [CalendarQuarterName]\n\t,[CalendarYear] \n\t,[FiscalMonth] \n\t,REPLACE([FiscalMonthName] , '\"','') AS [FiscalMonthName]\n\t,[FiscalQuarter] \n\t,REPLACE([FiscalQuarterName] , '\"', '') AS [FiscalQuarterName]\n\t,[FiscalYear] \n\tfrom stg.azure_dates_stg",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "covid19dwsqlpool",
+				"poolName": "covid19dwsqlpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
