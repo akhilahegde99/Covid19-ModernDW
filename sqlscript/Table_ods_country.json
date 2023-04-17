@@ -2,7 +2,7 @@
 	"name": "Table_ods_country",
 	"properties": {
 		"content": {
-			"query": "\n\nCREATE  TABLE [ods].[Country]\n( \n\t[CountryName] [nvarchar](4000)  NULL,\n\t[CountryCode] [nvarchar](4000)  NULL,\n\t[Longitude] [float]  NULL,\n\t[Latitude] [float]  NULL,\n\t[Created_Date] DATETIME2 , \n\t[Updated_Date] DATETIME2 NULL \n\n)\n\n\n",
+			"query": "CREATE PROC stg.Country_Load_Ods\nAS\nIF OBJECT_ID(N'tempdb..##TEMP_COUNTRY') IS NOT NULL\nBEGIN\n\tDROP TABLE #TEMP_COUNTRY\nEND\n\nSELECT *\nINTO #TEMP_COUNTRY\nFROM (\n\tSELECT [CountryName]\n\t\t,[CountryCode]\n\t\t,[Longitude]\n\t\t,[Latitude]\n\tFROM stg.onprem_country_stg\n\t\n\tUNION\n\t\n\tSELECT [CountryName]\n\t\t,[CountryCode]\n\t\t,[Longitude]\n\t\t,[Latitude]\n\tFROM stg.AzureDB_Country_Stg\n\t) AS A\n\nUPDATE tgt\nSET tgt.[Longitude] = src.[Longitude]\n\t,tgt.[Latitude] = src.[Latitude]\n\t,tgt.updated_date = getdate()\nFROM ods.country tgt\nINNER JOIN #TEMP_COUNTRY src ON tgt.[CountryName] = replace(src.[CountryName], '\"', '')\n\tAND tgt.[CountryCode] = replace(src.[CountryCode], '\"', '')\n\nINSERT INTO ods.country (\n\t[CountryName]\n\t,[CountryCode]\n\t,[Longitude]\n\t,[Latitude]\n\t,create_date\n\t)\nSELECT REPLACE([CountryName], '\"', '') AS [CountryName]\n\t,REPLACE([CountryCode], '\"', '') AS [CountryCode]\n\t,[Longitude]\n\t,[Latitude]\n\t,GETDATE() AS create_date\nFROM #TEMP_COUNTRY SRC\nLEFT JOIN ods.country TGT ON tgt.[CountryName] = replace(src.[CountryName], '\"', '')\n\tAND tgt.[CountryCode] = replace(src.[CountryCode], '\"', '')\nWHERE TGT.[CountryName] IS NULL\n\tAND TGT.[CountryCode] IS NULL",
 			"metadata": {
 				"language": "sql"
 			},
