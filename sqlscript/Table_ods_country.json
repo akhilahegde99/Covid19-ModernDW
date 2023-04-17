@@ -1,0 +1,17 @@
+{
+	"name": "Table_ods_country",
+	"properties": {
+		"content": {
+			"query": "\n\nCREATE  TABLE [ods].[Country]\n( \n\t[CountryName] [nvarchar](4000)  NULL,\n\t[CountryCode] [nvarchar](4000)  NULL,\n\t[Longitude] [float]  NULL,\n\t[Latitude] [float]  NULL,\n\t[Created_Date] DATETIME2 , \n\t[Updated_Date] DATETIME2 NULL \n\n)\n\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "covid19dwsqlpool",
+				"poolName": "covid19dwsqlpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
