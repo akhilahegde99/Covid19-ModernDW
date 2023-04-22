@@ -1,0 +1,17 @@
+{
+	"name": "table_factDeaths",
+	"properties": {
+		"content": {
+			"query": "Create table [dwh].FactDeaths\n( \n DateKey bigint NOT NULL ,\n CountryKey bigint NOT NULL ,\n\t[Deaths] [bigint] NULL,\n\t[Deaths_Change] [bigint] NULL\n\n) ",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "covid19dwsqlpool",
+				"poolName": "covid19dwsqlpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
