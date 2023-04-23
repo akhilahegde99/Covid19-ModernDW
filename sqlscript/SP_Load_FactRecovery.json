@@ -1,0 +1,17 @@
+{
+	"name": "SP_Load_FactRecovery",
+	"properties": {
+		"content": {
+			"query": "CREATE PROC [dwh].[Load_FactRecovery]\nAS\nBEGIN\n\tTRUNCATE TABLE dwh.FactRecovery\n\n\tINSERT INTO dwh.FactRecovery (\n\t\tDateKey\n\t\t,CountryKey\n\t\t,[Recovered]\n\t\t,[Recovered_Change]\n\t\t)\n\tSELECT dd.datekey\n\t\t,dc.countrykey\n\t\t,cv.Recovered\n\t\t,cv.Recovered_Change\n\tFROM ods.CovidMetrics cv\n\tINNER JOIN dwh.DimCountry dc ON cv.ISO3 = dc.CountryCode\n\tINNER JOIN dwh.DimDate dd ON CONVERT(INT, CONVERT(VARCHAR(8), cv.Date, 112)) = dd.datekey\nEND",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "covid19dwsqlpool",
+				"poolName": "covid19dwsqlpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
