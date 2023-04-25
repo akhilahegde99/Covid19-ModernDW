@@ -1,0 +1,17 @@
+{
+	"name": "table_cosmos_covidpolicy_stg",
+	"properties": {
+		"content": {
+			"query": "IF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseDelimitedTextFormat') \n\tCREATE EXTERNAL FILE FORMAT [SynapseDelimitedTextFormat] \n\tWITH ( FORMAT_TYPE = DELIMITEDTEXT ,\n\t       FORMAT_OPTIONS (\n\t\t\t FIELD_TERMINATOR = ',',\n\t\t\t USE_TYPE_DEFAULT = FALSE\n\t\t\t))\nGO\n\nIF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = 'workspace_covid19dtywy3evjk25c_dfs_core_windows_net') \n\tCREATE EXTERNAL DATA SOURCE [workspace_covid19dtywy3evjk25c_dfs_core_windows_net] \n\tWITH (\n\t\tLOCATION = 'abfss://workspace@covid19dtywy3evjk25c.dfs.core.windows.net', \n\t\tTYPE = HADOOP \n\t)\nGO\n\nCREATE EXTERNAL TABLE stg.cosmos_covidpolicy_stg (\n\t[CountryName] nvarchar(4000),\n\t[CountryCode] nvarchar(4000),\n\t[RegionName] nvarchar(4000),\n\t[RegionCode] nvarchar(4000),\n\t[Jurisdiction] nvarchar(4000),\n\t[Date] nvarchar(4000),\n\t[C1_School closing] nvarchar(4000),\n\t[C1_Flag] nvarchar(4000),\n\t[C2_Workplace closing] nvarchar(4000),\n\t[C2_Flag] nvarchar(4000),\n\t[C3_Cancel public events] nvarchar(4000),\n\t[C3_Flag] nvarchar(4000),\n\t[C4_Restrictions on gatherings] nvarchar(4000),\n\t[C4_Flag] nvarchar(4000),\n\t[C5_Close public transport] nvarchar(4000),\n\t[C5_Flag] nvarchar(4000),\n\t[C6_Stay at home requirements] nvarchar(4000),\n\t[C6_Flag] nvarchar(4000),\n\t[C7_Restrictions on internal movement] nvarchar(4000),\n\t[C7_Flag] nvarchar(4000),\n\t[C8_International travel controls] nvarchar(4000),\n\t[E1_Income support] nvarchar(4000),\n\t[E1_Flag] nvarchar(4000),\n\t[E2_Debt contract relief] nvarchar(4000),\n\t[E3_Fiscal measures] nvarchar(4000),\n\t[E4_International support] nvarchar(4000),\n\t[H1_Public information campaigns] nvarchar(4000),\n\t[H1_Flag] nvarchar(4000),\n\t[H2_Testing policy] nvarchar(4000),\n\t[H3_Contact tracing] nvarchar(4000),\n\t[H4_Emergency investment in healthcare] nvarchar(4000),\n\t[H5_Investment in vaccines] nvarchar(4000),\n\t[H6_Facial Coverings] nvarchar(4000),\n\t[H6_Flag] nvarchar(4000),\n\t[H7_Vaccination policy] nvarchar(4000),\n\t[H7_Flag] nvarchar(4000),\n\t[H8_Protection of elderly people] nvarchar(4000),\n\t[H8_Flag] nvarchar(4000),\n\t[M1_Wildcard] nvarchar(4000),\n\t[StringencyIndex] nvarchar(4000),\n\t[StringencyIndexForDisplay] nvarchar(4000),\n\t[StringencyLegacyIndex] nvarchar(4000),\n\t[CStringencyLegacyIndexForDisplay] nvarchar(4000),\n\t[GovernmentResponseIndex] nvarchar(4000),\n\t[GovernmentResponseIndexForDisplay] nvarchar(4000),\n\t[ContainmentHealthIndex] nvarchar(4000),\n\t[ContainmentHealthIndexForDisplay] nvarchar(4000),\n\t[EconomicSupportIndex] nvarchar(4000),\n\t[EconomicSupportIndexForDisplay] nvarchar(4000)\n\t)\n\tWITH (\n\tLOCATION = 'covid_policy_tracker.csv',\n\tDATA_SOURCE = [workspace_covid19dtywy3evjk25c_dfs_core_windows_net],\n\tFILE_FORMAT = [SynapseDelimitedTextFormat]\n\t)\nGO\n\n\nSELECT TOP 100 * FROM stg.cosmos_covidpolicy_stg\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "covid19dwsqlpool",
+				"poolName": "covid19dwsqlpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

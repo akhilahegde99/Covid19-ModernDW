@@ -1,0 +1,17 @@
+{
+	"name": "table_DimDate",
+	"properties": {
+		"content": {
+			"query": "\n\tCREATE TABLE [dwh].[DimDate]\n(\n\t[DateKey] [bigint] NULL,\n\t[FullDate] [varchar](2000) NULL,\n\t[isWeekDay] [bit] NULL,\n\t[DayOfWeek] [bigint] NULL,\n\t[DayOfMonth] [bigint] NULL,\n\t[DayOfQuarter] [bigint] NULL,\n\t[DayOfYear] [bigint] NULL,\n\t[DayName] [nvarchar](4000) NULL,\n\t[WeekOfYear] [bigint] NULL,\n\t[WeekName] [nvarchar](4000) NULL,\n\t[MonthOfYear] [bigint] NULL,\n\t[MonthName] [nvarchar](4000) NULL,\n\t[CalendarQuarter] [bigint] NULL,\n\t[CalendarQuarterName] [nvarchar](4000) NULL,\n\t[CalendarYear] [bigint] NULL,\n\t[FiscalMonth] [bigint] NULL,\n\t[FiscalMonthName] [nvarchar](4000) NULL,\n\t[FiscalQuarter] [bigint] NULL,\n\t[FiscalQuarterName] [nvarchar](4000) NULL,\n\t[FiscalYear] [bigint] NULL\n)",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "covid19dwsqlpool",
+				"poolName": "covid19dwsqlpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"name": "table_FactCases",
+	"properties": {
+		"content": {
+			"query": "create table [dwh].FactCases\n( \n DateKey bigint NOT NULL ,\n CountryKey bigint NOT NULL ,\n [Confirmed] [bigint] NOT NULL,\n [Confirmed_Change] [bigint] NOT NULL\n) ",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "covid19dwsqlpool",
+				"poolName": "covid19dwsqlpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

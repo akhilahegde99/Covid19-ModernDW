@@ -1,0 +1,17 @@
+{
+	"name": "Table_FactPolicyIndex",
+	"properties": {
+		"content": {
+			"query": "Create table dwh.FactPolicyIndex\n( \n    PolicyKey int not null ,\n\t[StringencyIndex] float  NULL,\n\t[StringencyIndexForDisplay] float  NULL,\n\t[StringencyLegacyIndex] float  NULL,\n\t[CStringencyLegacyIndexForDisplay] float  NULL,\n\t[GovernmentResponseIndex] float  NULL,\n\t[GovernmentResponseIndexForDisplay] float  NULL,\n\t[ContainmentHealthIndex] float  NULL,\n\t[ContainmentHealthIndexForDisplay] float  NULL,\n\t[EconomicSupportIndex] float  NULL,\n\t[EconomicSupportIndexForDisplay] float NULL\n\n\t) ",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "covid19dwsqlpool",
+				"poolName": "covid19dwsqlpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

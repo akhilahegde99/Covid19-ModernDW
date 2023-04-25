@@ -1,0 +1,17 @@
+{
+	"name": "table_DimCountry",
+	"properties": {
+		"content": {
+			"query": "    Create table dwh.DimCountry\n\t( \n\t CountryKey int identity(1,1) Primary key  NONCLUSTERED NOT ENFORCED\n\t,[CountryName] [nvarchar](4000) NULL\n\t,[CountryCode] [nvarchar](4000) NULL\n\t,[Longitude] [float] NULL\n\t,[Latitude] [float] NULL\n\t,[Created_Date] [datetime2] NULL\n\t,[Updated_Date] [datetime2] NULL\n\n\t) \n\n     \n\t",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "covid19dwsqlpool",
+				"poolName": "covid19dwsqlpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

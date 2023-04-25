@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 1",
+	"properties": {
+		"content": {
+			"query": "CREATE EXTERNAL DATA SOURCE [Covid19ModernDW] WITH \n(\tTYPE = HADOOP,\n\tLOCATION = N'wasbs://covid19moderndw@covid19dtywy3evjk25c.blob.core.windows.net/',\n\tCREDENTIAL = [AzureCred]\n);\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "test19",
+				"poolName": "test19"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

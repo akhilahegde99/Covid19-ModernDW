@@ -1,0 +1,17 @@
+{
+	"name": "schema_create_script",
+	"properties": {
+		"content": {
+			"query": "create schema [stg]\ncreate schema [ods]\ncreate schema [dwh]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "covid19dwsqlpool",
+				"poolName": "covid19dwsqlpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

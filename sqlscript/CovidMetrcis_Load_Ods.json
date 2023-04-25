@@ -1,0 +1,17 @@
+{
+	"name": "CovidMetrcis_Load_Ods",
+	"properties": {
+		"content": {
+			"query": "\nAlter PROC [stg].[CovidMetrcis_Load_Ods] AS\nBEGIN\nIF OBJECT_ID(N'tempdb..##TEMP_CovidMetrics') IS NOT NULL\nBEGIN\n\tDROP TABLE #TEMP_CovidMetrics\nEND\n\nSELECT *\nINTO #TEMP_CovidMetrics\nFROM ( SELECT \n\tID AS [SrcID] ,\n\tUpdated as [Date],\n\t[Confirmed] ,\n\t[Confirmed_Change] ,\n\t[Deaths] ,\n\t[Deaths_Change] ,\n\t[Recovered] ,\n\t[Recovered_Change] ,\n\t[Latitude] ,\n\t[Longitude] ,\n\t[ISO2] ,\n\t[ISO3] ,\n\t[Country_Region] ,\n\t'AzureSQL' as [SrcName] \n\tFROM stg.AzureDB_CovidMetrics_Stg\n\t\n\tUNION\n\t\n\tSELECT \n\tID AS [SrcID] ,\n\tUpdated as [Date],\n\t[Confirmed] ,\n\t[Confirmed_Change] ,\n\t[Deaths] ,\n\t[Deaths_Change] ,\n\t[Recovered] ,\n\t[Recovered_Change] ,\n\t[Latitude] ,\n\t[Longitude] ,\n\t[ISO2] ,\n\t[ISO3] ,\n\t[Country_Region] ,\n\t'OnPrem' as [SrcName] \n\tFROM dbo.onprem_CovidMetrics_Stg\n\t) AS A\n\nUPDATE tgt\nSET tgt.[Confirmed] = src.[Confirmed]\n\t,tgt.[Confirmed_Change] = src.[Confirmed_Change]\n\t,tgt.[Deaths] = src.[Deaths]\n\t,tgt.[Deaths_Change] = src.[Deaths_Change] \n\t,tgt.[Recovered] = src.[Recovered]\n\t,tgt.[Recovered_Change] = src.[Recovered_Change]\n\t,tgt.[Latitude] = src.[Latitude]\n\t,tgt.[Longitude] = src.[Longitude]\n\t,tgt.[ISO2]  = REPLACE(src.[ISO2],'\"' , '') \n\t,tgt.[ISO3] = REPLACE(src.[ISO3], '\"', '') \n\t,tgt.[Country_Region] = REPLACE(src.[Country_Region], '\"','')\n\t,tgt.updated_date = getdate()\nFROM ods.CovidMetrics tgt\nINNER JOIN #TEMP_CovidMetrics src ON tgt.[SrcId] = src.[SrcID]\n\tAND tgt.[SrcName] = src.[SrcName]\n\nINSERT INTO ods.CovidMetrics  (\n\t\t[SrcID] ,\n\t[Date] , \n\t[Confirmed] ,\n\t[Confirmed_Change] ,\n\t[Deaths] ,\n\t[Deaths_Change] ,\n\t[Recovered] ,\n\t[Recovered_Change] ,\n\t[Latitude] ,\n\t[Longitude] ,\n\t[ISO2] ,\n\t[ISO3] ,\n\t[Country_Region] ,\n\t[Created_Date] ,\n\t[Updated_Date] ,\n\t[SrcName] \n\t)\nSELECT SRC.[SrcID] ,\n\tCONVERT(datetime2, SRC.[Date]) as [Date]  , \n\tSRC.[Confirmed] ,\n\tSRC.[Confirmed_Change] ,\n\tSRC.[Deaths] ,\n\tSRC.[Deaths_Change] ,\n\tSRC.[Recovered] ,\n\tSRC.[Recovered_Change] ,\n\tSRC.[Latitude] ,\n\tSRC.[Longitude] ,\n\tREPLACE(src.[ISO2],'\"' , '') AS [ISO2] ,\n\tREPLACE(src.[ISO3], '\"', '') AS [ISO3] ,\n\tREPLACE(src.[Country_Region], '\"','')AS [Country_Region] ,\n\tGETDATE() AS [Created_Date] ,\n\tNULL AS [Updated_Date] ,\n\tSRC.[SrcName]\nFROM #TEMP_CovidMetrics SRC\nLEFT JOIN ods.CovidMetrics TGT ON tgt.[SrcId] = src.[SrcID]\n\tAND tgt.[SrcName] = src.[SrcName]\nWHERE TGT.[SrcId] IS NULL\n\tAND TGT.[SrcName] IS NULL\n\n\nEND",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "covid19dwsqlpool",
+				"poolName": "covid19dwsqlpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
