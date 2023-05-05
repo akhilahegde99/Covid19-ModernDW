@@ -90,6 +90,30 @@
 					"referenceName": "covid19dwsqlpool",
 					"type": "SqlPoolReference"
 				}
+			},
+			{
+				"name": "LoadDWH",
+				"type": "SqlPoolStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Load ODS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"sqlPool": {
+					"referenceName": "covid19dwsqlpool",
+					"type": "SqlPoolReference"
+				}
 			}
 		],
 		"annotations": []
