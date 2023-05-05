@@ -1,0 +1,17 @@
+{
+	"name": "DemoExternalTables",
+	"properties": {
+		"content": {
+			"query": "----external tables in staging schema----------------\nselect top 10 * from stg.AzureDB_Country_Stg -- Azure SQL DB Country table \nselect top 10 * from stg.onprem_country_stg -- OnPrem SQL DB Country table \nselect top 10 * from stg.azure_dates_stg -- Azure SQL DB dates table \nselect top 10 * from stg.cosmos_covidpolicy_stg -- Azure Cosmos DB Policy data \nselect top 10 * from dbo.onprem_CovidMetrics_Stg -- OnPrem SQL DB CovidMetrics table \nselect top 10 * from stg.AzureDB_CovidMetrics_Stg -- Azure SQL DB CovidMterics table ",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "covid19dwsqlpool",
+				"poolName": "covid19dwsqlpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
